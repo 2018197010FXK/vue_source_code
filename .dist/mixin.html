@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 给模板中的属性，增加一个收集器 dep -->
+    <!-- 页面渲染的时候，我们将渲染逻辑封装到watcher中，vm._updata(vm._render()) -->
+    <!-- 让dep记住这个watcher，稍后属性改变了，可以找到对应dep中存放的watcher进行重新渲染 -->
+    <!-- 观察者模式 -->
+    <div id="app" class="hhh" style="color: red;">
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+        Vue.mixin({
+            created(){
+                console.log('mixin 1')
+            },
+            a:1
+        })
+
+        Vue.mixin({
+            created(){
+                console.log('mixin 2')
+            },
+            b:2
+        })
+        console.log(Vue.options)
+        const vm = new Vue({
+            data() {
+                return {
+                    name: 'fxk',
+                    age: 18,
+                    address: {
+                        name: 'luoyang'
+                    },
+       
+                }
+
+            },
+            el: '#app'
+        })
+        vm.$mount("#app")
+
+        // 1.将数据处理成响应式数据 initState
+        // 2.模板编译：将模板先转换成ast语法树，将ast语法树生成**render**方法
+        // 3.调用render函数，会进行取值操作，产生对应的虚拟dom， render(){_c('div',null,_v(name))} 触发get方法
+        // 4.将虚拟dom渲染成真实dom
+    </script>
+</body>
+
+</html>
